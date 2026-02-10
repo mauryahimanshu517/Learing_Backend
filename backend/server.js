@@ -4,7 +4,6 @@ import app from "./src/app.js"
 import dbConnect from "./src/config/dbConnectData.js"
 
 
-
 dbConnect()
 
 
