@@ -1,6 +1,8 @@
 import express from "express"
 import modelData from "./model/data.model.js"
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 
 
 
@@ -58,5 +60,17 @@ app.patch("/api/updateNotes/:id", async (req, res) => {
     })
 
 })
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+console.log("hello")
+console.log("hello",__filename,__dirname)
+app.use(express.static(path.join(__dirname, "../public")));
+
+// Catch-all route (SPA support)
+app.get("*name", function (req, res) {
+  res.sendFile(path.join(__dirname, "..","/public/index.html"));
+});
 
 export default app
