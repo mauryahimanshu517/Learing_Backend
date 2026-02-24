@@ -64,8 +64,7 @@ app.patch("/api/updateNotes/:id", async (req, res) => {
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-console.log("hello")
-console.log("hello",__filename,__dirname)
+
 app.use(express.static(path.join(__dirname, "../public")));
 
 // Catch-all route (SPA support)

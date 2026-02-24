@@ -1,10 +1,12 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
+let isConnected = false;
 
-function dbConnect(){
-    const data=mongoose.connect(`${process.env.DB_DATA}`).then(()=>{
-        console.log("database connected succesuffully")
-    })
-}
+const dbConnect = async () => {
+  if (isConnected) return;
+
+  const db = await mongoose.connect(process.env.DB_DATA);
+  isConnected = db.connections[0].readyState;
+};
 
 export default dbConnect;

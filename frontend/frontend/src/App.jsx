@@ -11,7 +11,7 @@ function App() {
   console.log(edit, title, description)
 
   function getData() {
-    axios.get("http://localhost:5000/api/getNotes").then((res) => {
+    axios.get("https://learing-backend.vercel.app/api/getNotes").then((res) => {
       setData(res.data.getData)
     })
   }
@@ -26,7 +26,7 @@ function App() {
     const { title, description } = e.target.elements
     console.log(title.value, description.value)
 
-    axios.post("http://localhost:5000/api/createNotes", {
+    axios.post("https://learing-backend.vercel.app/api/createNotes", {
       title: title.value,
       description: description.value
     }).then((res) => {
@@ -37,7 +37,7 @@ function App() {
   }
 
   function handleDelete(id) {
-    axios.delete(`http://localhost:5000/api/deteteNotes/${id}`).then((res) => {
+    axios.delete(`https://learing-backend.vercel.app/api/deteteNotes/${id}`).then((res) => {
       console.log(res)
       getData()
     })
