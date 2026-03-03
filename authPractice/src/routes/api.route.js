@@ -44,7 +44,7 @@ authRouter.post("/register", async (req, res) => {
 
 authRouter.get("/get-me", async (req, res) => {
     const token = req.cookies.token
-    console.log(token)
+    console.log(token)//token
 
 })
 
