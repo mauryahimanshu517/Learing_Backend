@@ -1,6 +1,5 @@
 import dbModel from "../model/db.model.js"
 import express from "express"
-import cookieparser from "cookie-parser"
 import crypto from "crypto";
 import jwt from "jsonwebtoken"
 
@@ -32,7 +31,7 @@ authRouter.post("/register", async (req, res) => {
         process.env.TOKEN_SECRET
     )
 
-    cookieparser(token)
+    res.cookie("token", token)
 
 
     res.status(201).json({
@@ -41,6 +40,12 @@ authRouter.post("/register", async (req, res) => {
         token
 
     })
+})
+
+authRouter.get("/get-me", async (req, res) => {
+    const token = req.cookies.token
+    console.log(token)
+
 })
 
 authRouter.post("/login", async (req, res) => {
@@ -54,7 +59,7 @@ authRouter.post("/login", async (req, res) => {
         })
     }
 
-    const isPasswordCorrect = isEmailExist.password ===  crypto.createHash("md5").update(password).digest("hex")
+    const isPasswordCorrect = isEmailExist.password === crypto.createHash("md5").update(password).digest("hex")
 
     if (!isPasswordCorrect) {
         return res.status(404).json({
@@ -65,7 +70,7 @@ authRouter.post("/login", async (req, res) => {
         id: isEmailExist._id
     }, process.env.TOKEN_SECRET)
 
-    res.cookie("jwt_token", token)
+    res.cookie("token", token)
 
     res.status(200).json({
         message: "user logined successfully",
