@@ -1,6 +1,5 @@
+//created a DB
 import mongoose from "mongoose"
-
-
 
 const databaseModel=new mongoose.Schema({
     name:"String",
