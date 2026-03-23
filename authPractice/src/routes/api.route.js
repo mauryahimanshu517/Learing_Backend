@@ -14,7 +14,7 @@ authRouter.post("/register", async (req, res) => {
     const isEmailAleardyExist = await dbModel.findOne({ email })
 
     if (isEmailAleardyExist) {
-        res.status(200).json({
+        return res.status(200).json({
             message: "email already exist"
         })
     }
@@ -43,8 +43,11 @@ authRouter.post("/register", async (req, res) => {
 })
 
 authRouter.get("/get-me", async (req, res) => {
-    const token = req.cookies.token
-    console.log(token)//token
+     console.log(req.cookies.token)
+    res.json(req.cookies.token)
+    // console.log("hello")
+    // const tokens= await 
+    // console.log(tokens)
 
 })
 
