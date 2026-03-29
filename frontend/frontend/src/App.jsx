@@ -46,7 +46,7 @@ function App() {
 
 
   function handleUpdate() {
-    axios.patch(`http://localhost:5000/api/updateNotes/${edit}`, {
+    axios.patch(`https://learing-backend.vercel.app/api/updateNotes/${edit}`, {
       title, description
     }).then((res) => {
       console.log(res)
