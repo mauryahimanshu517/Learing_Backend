@@ -1,24 +1,73 @@
 import express from "express"
 import userModel from "../models/user.model.js"
-
+import crypto from "crypto"
 const authRouter = express.Router()
+import jwt from "jsonwebtoken"
+
 
 authRouter.post("/register", async (req, res) => {
     const { username, email, password, bio, profileImage } = req.body
 
-    const isUserExistByUsername = await userModel.findOne({ username })
-    if (isUserExistByUsername) {
+    // const isUserExistByUsername = await userModel.findOne({ username })
+    // if (isUserExistByUsername) {
+    //     return res.status(409).json({
+    //         message: "user already exit by this username"
+    //     })
+    // }
+    // const isUserAlreadyExitByEmail = await userModel.findOne({ email })
+
+    // if (isUserAlreadyExitByEmail) {
+    //     return res.status(409).json({
+    //         message: "same email already exist"
+    //     })
+    // }
+
+    const isUserAlreadyExist=await userModel.findOne({
+        $or:[
+            {username},
+            {email}
+        ]
+    })
+
+    console.log("isUserExist",isUserAlreadyExist)
+
+    if(isUserAlreadyExist){
         return res.status(409).json({
-            message: "user already exit by this username"
+            message:"User Already Exist"
         })
     }
-    const isUserAlreadyExitByEmail = await userModel.findOne({ email })
 
-    if (isUserAlreadyExitByEmail) {
-        return res.status(409).json({
-            message: "same email already exist"
-        })
-    }
+    const hash=crypto.createHash("sha256").update(password).digest("hex")
 
-    const data=await userModel.create({username,email })
+    const user =await userModel.create(
+        {
+            username,
+            email,
+            password:hash,
+            profileImage,
+            bio
+        }
+    )
+    //generate token
+    const token=jwt.sign({
+        //user ka data hona chayie
+        //data must be unique
+         id:user._id
+        
+    },process.env.JWT_SECRET)
+    //save the token to cookies
+    res.cookie("token",token)
+
+    res.status(201).json({
+        message:"User registered successfully",
+        user:{
+            email:user.email,
+            username:user.username,
+            bio:user.bio,
+            profileImage:user.profileImage
+
+        }
+    })
 })
+
+export default authRouter

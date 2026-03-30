@@ -10,7 +10,7 @@ const userSchema= new mongoose.Schema({
     },
 
     email:{
-        type:"Strinng",
+        type:"String",
         unique:[true,"email already exist"],
         required:[true,"email is required"]
     },
@@ -25,6 +25,6 @@ const userSchema= new mongoose.Schema({
     }
 })
 
-const userModel=mongoose.model("users",userSchema)
+const userModel=mongoose.model("InstaClone",userSchema)
 
 export default userModel
