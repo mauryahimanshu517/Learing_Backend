@@ -71,6 +71,7 @@ authRouter.post("/register", async (req, res) => {
 })
 
 authRouter.post("/login",async(req,res)=>{
+
  const {username,email,password}=req.body
 
  const user = await userModel.findOne({
