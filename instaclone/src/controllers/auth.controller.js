@@ -1,6 +1,6 @@
 import userModel from "../models/user.model.js"
-import crypto from "crypto"
 import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs"
 
  async function registerController (req, res){
     const { username, email, password, bio, profileImage } = req.body
@@ -34,7 +34,7 @@ import jwt from "jsonwebtoken"
         })
     }
 
-    const hash=crypto.createHash("sha256").update(password).digest("hex")
+    const hash=await bcrypt.hash(password,10)
 
     const user =await userModel.create(
         {
@@ -87,8 +87,7 @@ if(!user){
         message:"user not found"
     })
 }
-const hash=crypto.createHash("sha256").update(password).digest("hex")
-
+const hash= await bcrypt.compare(password,user.password)
 const isPasswordVaild= hash == user.password
 
 if(!isPasswordVaild){
