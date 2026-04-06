@@ -1,8 +1,5 @@
-import app from "./src/app.js"
-
-
-
-
-app.listen("5000",(req,res)=>{
-    console.log("listining to port 5000")
-})
+import 'dotenv/config';
+const app = await import("./src/app.js");
+app.default.listen("5000", () => {
+    console.log("listening to port 5000");
+});

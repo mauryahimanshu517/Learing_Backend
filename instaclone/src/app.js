@@ -1,5 +1,3 @@
-import dontenv from "dotenv"
-dontenv.config()
 import express from "express"
 import connectToDb from "../src/config/database.js"
 import cookieParser from "cookie-parser"

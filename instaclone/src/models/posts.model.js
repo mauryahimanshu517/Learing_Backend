@@ -1,8 +1,6 @@
 import mongoose from "mongoose"
 
 
-
-
 const postsSchema=new mongoose.Schema({
 
     caption:
@@ -19,8 +17,6 @@ const postsSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         required:[true,"user id is required for creating an post"]
     }
-
-
 
 })
 

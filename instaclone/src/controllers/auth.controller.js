@@ -70,6 +70,7 @@ import bcrypt from "bcryptjs"
 async function loginController(req,res){
 
  const {username,email,password}=req.body
+ console.log("body",req.body)
 
  const user = await userModel.findOne({
     $or:[
@@ -81,14 +82,14 @@ async function loginController(req,res){
         }
     ]
  })
-
+console.log("user",user)
 if(!user){
     return res.status(404).json({
         message:"user not found"
     })
 }
 const hash= await bcrypt.compare(password,user.password)
-const isPasswordVaild= hash == user.password
+const isPasswordVaild = hash
 
 if(!isPasswordVaild){
     return res.status(401).json({
